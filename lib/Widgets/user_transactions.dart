@@ -40,10 +40,17 @@ class _UserTransactionsState extends State<UserTransactions> {
     return Column(
       children: <Widget>[
         NewTransaction(
-          onAddTransaction: (t, a) {
-            print(t);
-            print(a);
-            print('checked');
+          onAddTransaction: (title, amount) {
+            print(title);
+            print(amount);
+            setState(() {
+              _usertransactions.add(Transaction(
+                id: title,
+                title: title,
+                amount: double.parse(amount),
+                date: DateTime.now(),
+              ));
+            });
           },
         ),
         TransactionList(_usertransactions),

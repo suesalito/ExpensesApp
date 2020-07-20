@@ -36,7 +36,7 @@ class TransactionList extends StatelessWidget {
               Container(
                 child: Text(
                   //'\$' + transactions[index].amount.toString(),
-                  '\$${_usertransactions[index].amount.toString()}',
+                  '\$${_usertransactions[index].amount.toStringAsFixed(2)}',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 margin: EdgeInsets.all(10),
