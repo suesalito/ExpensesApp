@@ -24,6 +24,17 @@ class _UserTransactionsState extends State<UserTransactions> {
     )
   ];
 
+  void _addNewTransaction(String title, String amount) {
+    setState(() {
+      _usertransactions.add(Transaction(
+        id: title,
+        title: title,
+        amount: double.parse(amount),
+        date: DateTime.now(),
+      ));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TransactionList tList = TransactionList();
@@ -37,24 +48,20 @@ class _UserTransactionsState extends State<UserTransactions> {
     // _usertransactions.add(newTransaction);
 
     // tList.userTrans = _usertransactions;
-    return Column(
-      children: <Widget>[
-        NewTransaction(
-          onAddTransaction: (title, amount) {
-            print(title);
-            print(amount);
-            setState(() {
-              _usertransactions.add(Transaction(
-                id: title,
-                title: title,
-                amount: double.parse(amount),
-                date: DateTime.now(),
-              ));
-            });
-          },
-        ),
-        TransactionList(_usertransactions),
-      ],
+    return Container(
+      //height: 700,
+      child: Column(
+        children: <Widget>[
+          NewTransaction(
+            onAddTransaction: (title, amount) {
+              print(title);
+              print(amount);
+              _addNewTransaction(title, amount);
+            },
+          ),
+          TransactionList(_usertransactions),
+        ],
+      ),
     );
   }
 }

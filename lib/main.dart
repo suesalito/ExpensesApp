@@ -42,6 +42,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.pink,
         actions: <Widget>[
           Container(
             padding: EdgeInsets.only(right: 7),
@@ -63,18 +64,22 @@ class MyHomePage extends StatelessWidget {
         ],
         title: Text('Flutter Expense App'),
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: Card(
-              color: Colors.blue,
-              child: Text('CHART!'),
-              elevation: 5,
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                child: Card(
+                  color: Colors.blue,
+                  child: Text('CHART!'),
+                  elevation: 5,
+                ),
+              ),
+              UserTransactions(),
+            ],
           ),
-          UserTransactions(),
-        ],
+        ),
       ),
     );
   }
