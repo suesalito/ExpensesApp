@@ -1,15 +1,21 @@
+import 'package:expensesapp/models/TransactionData.dart';
 import 'package:flutter/material.dart';
 //import 'models/transaction.dart';
 import 'Widgets/user_transactions.dart';
+import 'package:provider/provider.dart';
+//import 'models/transactionData.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter App',
-      home: MyHomePage(),
+    return ChangeNotifierProvider(
+      create: (context) => TransactionData(),
+      child: MaterialApp(
+        title: 'Flutter App',
+        home: MyHomePage(),
+      ),
     );
   }
 }
@@ -40,47 +46,73 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.pink,
-        actions: <Widget>[
-          Container(
-            padding: EdgeInsets.only(right: 7),
-            // child: Ink(
-            //   decoration: const ShapeDecoration(
-            //     color: Colors.lightBlue,
-            //     shape: CircleBorder(),
-            //   ),
-            child: IconButton(
-              icon: Icon(Icons.add),
-              color: Colors.white,
-              padding: EdgeInsets.all(2),
-              onPressed: () {},
-              // highlightColor: Colors.transparent,
-              // hoverColor: Colors.transparent,
-            ),
-            //),
-          )
-        ],
-        title: Text('Flutter Expense App'),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: double.infinity,
-                child: Card(
-                  color: Colors.blue,
-                  child: Text('CHART!'),
-                  elevation: 5,
-                ),
-              ),
-              UserTransactions(),
-            ],
+    return Consumer<TransactionData>(
+      builder: (context, transData, child) {
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              final String returnName = await showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                //backgroundColor: Colors.transparent, //set the edges transparent. better than set it hard code ARGB
+                //backgroundColor: Color.fromARGB(255, 117, 117, 117),
+                builder: (context) {
+                  return Container(
+                    height: 500,
+                  );
+                },
+              );
+              // if (returnName != null && returnName != '') {
+              //   print(returnName);
+              //   //addListTasks(returnName);
+              //   taskData.addListTasks(returnName);
+              // }
+            },
+            backgroundColor: Colors.pink,
+            child: Icon(Icons.add),
           ),
-        ),
-      ),
+          appBar: AppBar(
+            backgroundColor: Colors.pink,
+            actions: <Widget>[
+              Container(
+                padding: EdgeInsets.only(right: 7),
+                // child: Ink(
+                //   decoration: const ShapeDecoration(
+                //     color: Colors.lightBlue,
+                //     shape: CircleBorder(),
+                //   ),
+                child: IconButton(
+                  icon: Icon(Icons.add),
+                  color: Colors.white,
+                  padding: EdgeInsets.all(2),
+                  onPressed: () {},
+                  // highlightColor: Colors.transparent,
+                  // hoverColor: Colors.transparent,
+                ),
+                //),
+              )
+            ],
+            title: Text('Flutter Expense App'),
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    width: double.infinity,
+                    child: Card(
+                      color: Colors.blue,
+                      child: Text('CHART!'),
+                      elevation: 5,
+                    ),
+                  ),
+                  UserTransactions(),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
