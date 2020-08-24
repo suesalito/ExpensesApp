@@ -55,15 +55,20 @@ class _UserTransactionsState extends State<UserTransactions> {
         //height: 700,
         child: Column(
           children: <Widget>[
-            NewTransaction(
-              onAddTransaction: (title, amount) {
-                print(title);
-                print(amount);
-                //_addNewTransaction(title, amount);
-                transData.addNewTransaction(title, amount);
-              },
-            ),
-            TransactionList(transData.usertrans),
+            // NewTransaction(
+            //   onAddTransaction: (title, amount) {
+            //     print(title);
+            //     print(amount);
+            //     //_addNewTransaction(title, amount);
+            //     transData.addNewTransaction(title, amount);
+            //   },
+            // ),
+            transData.usertrans.length == 0
+                ? Container(
+                    child: Text('No Transaction'),
+                  )
+                : TransactionList(transData.usertrans),
+            //TransactionList(transData.usertrans),
           ],
         ),
       );

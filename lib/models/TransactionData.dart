@@ -5,18 +5,18 @@ import 'dart:collection';
 
 class TransactionData extends ChangeNotifier {
   final List<Transaction> _usertransactions = [
-    Transaction(
-      id: '1',
-      title: 'FFXIV',
-      amount: 49.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: '2',
-      title: 'CS',
-      amount: 29.99,
-      date: DateTime.now(),
-    )
+    // Transaction(
+    //   id: '1',
+    //   title: 'FFXIV',
+    //   amount: 49.99,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: '2',
+    //   title: 'CS',
+    //   amount: 29.99,
+    //   date: DateTime.now(),
+    // )
   ];
 
   UnmodifiableListView<Transaction> get usertrans {

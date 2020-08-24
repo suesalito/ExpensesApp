@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 //import 'models/transaction.dart';
 import 'Widgets/user_transactions.dart';
 import 'package:provider/provider.dart';
+import 'Widgets/new_transaction.dart';
+import 'Widgets/chart.dart';
 //import 'models/transactionData.dart';
 
 void main() => runApp(MyApp());
@@ -47,18 +49,28 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<TransactionData>(
-      builder: (context, transData, child) {
+      builder: (context, transDa, child) {
         return Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               final String returnName = await showModalBottomSheet(
                 context: context,
                 isScrollControlled: true,
+
                 //backgroundColor: Colors.transparent, //set the edges transparent. better than set it hard code ARGB
                 //backgroundColor: Color.fromARGB(255, 117, 117, 117),
                 builder: (context) {
                   return Container(
                     height: 500,
+                    child: NewTransaction(
+                      onAddTransaction: (title, amount) {
+                        print(title);
+                        print(amount);
+                        //_addNewTransaction(title, amount);
+                        transDa.addNewTransaction(title, amount);
+                        return Navigator.pop(context);
+                      },
+                    ),
                   );
                 },
               );
@@ -82,13 +94,40 @@ class MyHomePage extends StatelessWidget {
                 //     shape: CircleBorder(),
                 //   ),
                 child: IconButton(
-                  icon: Icon(Icons.add),
-                  color: Colors.white,
-                  padding: EdgeInsets.all(2),
-                  onPressed: () {},
-                  // highlightColor: Colors.transparent,
-                  // hoverColor: Colors.transparent,
-                ),
+                    icon: Icon(Icons.add),
+                    color: Colors.white,
+                    padding: EdgeInsets.all(2),
+                    onPressed: () async {
+                      final String returnName = await showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+
+                        //backgroundColor: Colors.transparent, //set the edges transparent. better than set it hard code ARGB
+                        //backgroundColor: Color.fromARGB(255, 117, 117, 117),
+                        builder: (context) {
+                          return Container(
+                            height: 500,
+                            child: NewTransaction(
+                              onAddTransaction: (title, amount) {
+                                print(title);
+                                print(amount);
+                                //_addNewTransaction(title, amount);
+                                transDa.addNewTransaction(title, amount);
+                                return Navigator.pop(context);
+                              },
+                            ),
+                          );
+                        },
+                      );
+                      // if (returnName != null && returnName != '') {
+                      //   print(returnName);
+                      //   //addListTasks(returnName);
+                      //   taskData.addListTasks(returnName);
+                      // }
+                    }
+                    // highlightColor: Colors.transparent,
+                    // hoverColor: Colors.transparent,
+                    ),
                 //),
               )
             ],
@@ -100,11 +139,7 @@ class MyHomePage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     width: double.infinity,
-                    child: Card(
-                      color: Colors.blue,
-                      child: Text('CHART!'),
-                      elevation: 5,
-                    ),
+                    child: Chart(),
                   ),
                   UserTransactions(),
                 ],
